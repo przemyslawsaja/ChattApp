@@ -8,7 +8,7 @@ const RoomsData = [
   {id: '2', name: "The one with article for Pheobe" },
   {id: '3', name: "Reachel's room" },
 ]
-export default function ChatRoomsScreen() {
+export default function RoomListScreen() {
   return (
     <View style={styles.container}>
       <FlatList

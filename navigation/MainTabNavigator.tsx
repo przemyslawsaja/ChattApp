@@ -6,8 +6,8 @@ import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/ChatRoomsScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import RoomListScreen from '../screens/RoomListScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -47,8 +47,8 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+        name="RoomListScreen"
+        component={RoomListScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
     </TabOneStack.Navigator>
@@ -61,8 +61,8 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
+        name="ChatScreen"
+        component={ChatScreen}
         options={{ headerTitle: 'Tab Two Title' }}
       />
     </TabTwoStack.Navigator>

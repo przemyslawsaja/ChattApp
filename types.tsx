@@ -9,11 +9,11 @@ export type BottomTabParamList = {
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  RoomListScreen: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  ChatScreen: undefined;
 };
 
 export type ChatRoom = {
