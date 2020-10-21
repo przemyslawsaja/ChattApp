@@ -1,37 +1,32 @@
-import * as React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
-import { Text, View } from '../components/Themed';
+import React, {FC} from 'react';
+import { Text } from '../components/Themed';
+import { useQuery, gql } from '@apollo/client';
+import { IRoomList } from '../types'
 import RoomListItem from '../components/RoomListItem/index'
 
-const RoomsData = [
-  {id: '1', name: "The one with Pheobe's recruitment task" },
-  {id: '2', name: "The one with article for Pheobe" },
-  {id: '3', name: "Reachel's room" },
-]
-export default function RoomListScreen() {
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={RoomsData} 
-        renderItem={({ item }) => <RoomListItem id={item.id} name={item.name}/>}
-        keyExtractor={(item) => item.id} 
-        />
-    </View>
-  );
+const LIST_USER_ROOMS = gql`
+    {
+      usersRooms{
+        rooms{
+          name
+          id
+        }
+      }
+    }
+  `;
+
+
+const RoomListScreen:FC<IRoomList> = ({navigation}) => {
+  const { loading, error, data } = useQuery(LIST_USER_ROOMS);
+  
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error :(</Text>;
+    
+  return data.usersRooms.rooms.map(({ name, id }) => (
+    <div key={id}>
+      <RoomListItem id={id} name={name} navigation={navigation}/>
+    </div>
+  ));
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+export default RoomListScreen;

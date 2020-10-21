@@ -21,14 +21,14 @@ export default function MainTabNavigator() {
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen 
         name="Rooms" 
-        component={TabOneNavigator}
+        component={RoomListScreen}
         options={{
-                tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
-              }}      
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+        }}      
         />
       <BottomTab.Screen 
         name="Chat" 
-        component={TabTwoNavigator}
+        component={ChatScreen}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="chat" color={color} />,
         }}
@@ -37,34 +37,7 @@ export default function MainTabNavigator() {
   );
 }
 
+
 function TabBarIcon(props: { name: string; color: string }) {
   return <Entypo size={30} {...props} />;
-}
-
-const TabOneStack = createStackNavigator<TabOneParamList>();
-
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="RoomListScreen"
-        component={RoomListScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
 }

@@ -19,8 +19,19 @@ export type TabTwoParamList = {
 export type ChatRoom = {
   id: String;
   name: string;
-}
+  navigation: object
+};
 
+export interface IRoomList {
+  navigation: object
+}
+export interface IChatScreen {
+  route: {
+    params: {
+      id: string
+    }
+  }; 
+}
 export type Message = {
   id: String;
   content: string;
