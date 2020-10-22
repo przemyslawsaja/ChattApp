@@ -1,12 +1,10 @@
 import React, { FC } from 'react'; 
 import { Text, View } from '../Themed';
-import { ChatRoom } from '../../types'
+import { IChatRoom } from '../../types'
 import styles from './style'
 import { Button } from 'react-native';
 
-
-
-const RoomListItem:FC<ChatRoom> = ({id, name, navigation}) => {
+const RoomListItem:FC<IChatRoom> = ({id, name, navigation}) => {
   return (
     <View style={styles.view}>
       <Text>{name}</Text>

@@ -5,7 +5,6 @@ import { ColorSchemeName } from 'react-native';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import MainTabNavigator from './MainTabNavigator';
-import NotFoundScreen from '../screens/NotFoundScreen';
 import Colors from '../constants/Colors';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -42,6 +41,3 @@ function RootNavigator() {
   );
 }
 
-/* 
- <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-*/

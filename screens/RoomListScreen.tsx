@@ -18,8 +18,8 @@ const LIST_USER_ROOMS = gql`
 
 const RoomListScreen:FC<IRoomList> = ({navigation}) => {
   const { loading, error, data } = useQuery(LIST_USER_ROOMS);
+  //TODO: add Data Interface
   
-
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error :(</Text>;
     
