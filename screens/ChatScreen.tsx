@@ -2,36 +2,9 @@ import React, { FC, useState, useCallback, useEffect } from 'react'
 import { Text } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { IChatScreen } from '../types'
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, gql, useMutation, from } from '@apollo/client';
 import { IMessage, IRoom} from '../types'
-
-const GET_ROOM_MESSAGES = gql`
-query ($RoomID: String!){
-  room(id: $RoomID){
-    messages{
-      body
-      id
-      insertedAt
-    }
-    user {
-      id
-      firstName
-    }
-  }
-}
-`;
-const SEND_MESSAGE = gql`
-  mutation ($RoomID: String!){
-  sendMessage(body:"exmaple message", roomId: $RoomID){
-    body
-    insertedAt
-    id
-    user {
-      id
-    }
-  }
-}
-`
+import { GET_ROOM_MESSAGES, SEND_MESSAGE } from '../graphql/queries'
 
 const ChatScreen:FC<IChatScreen> = ({route}) => {
 

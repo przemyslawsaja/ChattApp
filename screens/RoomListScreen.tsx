@@ -3,18 +3,7 @@ import { Text } from '../components/Themed';
 import { useQuery, gql } from '@apollo/client';
 import { IRoomList } from '../types'
 import RoomListItem from '../components/RoomListItem/index'
-
-const LIST_USER_ROOMS = gql`
-    {
-      usersRooms{
-        rooms{
-          name
-          id
-        }
-      }
-    }
-  `;
-
+import { LIST_USER_ROOMS } from '../graphql/queries'
 
 const RoomListScreen:FC<IRoomList> = ({navigation}) => {
   const { loading, error, data } = useQuery(LIST_USER_ROOMS);
