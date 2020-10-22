@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import { Text } from '../components/Themed';
 import { useQuery, gql } from '@apollo/client';
-import { IRoomList } from '../types'
+import { IRoomList } from '../types/IRoomList'
 import RoomListItem from '../components/RoomListItem/index'
 import { LIST_USER_ROOMS } from '../graphql/queries'
 

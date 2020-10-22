@@ -1,9 +1,10 @@
 import React, { FC, useState, useCallback, useEffect } from 'react'
 import { Text } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { IChatScreen } from '../types'
-import { useQuery, gql, useMutation, from } from '@apollo/client';
-import { IMessage, IRoom} from '../types'
+import { IChatScreen } from '../types/IChatScreen'
+import { IMessage } from '../types/IMessage'
+import { IRoom } from '../types/IRoom'
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_ROOM_MESSAGES, SEND_MESSAGE } from '../graphql/queries'
 
 const ChatScreen:FC<IChatScreen> = ({route}) => {

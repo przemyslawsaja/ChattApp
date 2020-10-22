@@ -1,6 +1,6 @@
 import React, { FC } from 'react'; 
 import { Text, View } from '../Themed';
-import { IChatRoom } from '../../types'
+import { IChatRoom } from '../../types/IChatRoom'
 import styles from './style'
 import { Button } from 'react-native';
 
