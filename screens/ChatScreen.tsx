@@ -17,14 +17,14 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
 
       useEffect(() => {
         if (CurrentRoom != undefined) {
-          CurrentRoom.room.messages.map(({body, id, insertedAt}) => {
+          CurrentRoom.room.messages.map(({body, id, insertedAt, user}) => {
             setMessages(messages => [...messages, {
               _id: id,
               text: body,
               createdAt: insertedAt,
               user: {
-                _id: CurrentRoom.room.user.id,
-                name: CurrentRoom.room.user.firstname,
+                _id: user.id,
+                name: user.firstname,
                 avatar: 'https://placeimg.com/140/140/any',
                 }
             }])
@@ -43,8 +43,11 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
     if (error) return <Text>Error :(</Text>;
 
     return (
-    <>  
+    <>
+      {console.log("state:")}  
       {console.log(messages)}
+      {console.log("db:")}
+      {console.log(CurrentRoom)}
       {LoggedUser != undefined && <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}

@@ -7,10 +7,10 @@ export const GET_ROOM_MESSAGES = gql`
         body
         id
         insertedAt
-      }
-      user {
-        id
-        firstName
+        user {
+          id
+          firstName
+        }
       }
     }
   }
