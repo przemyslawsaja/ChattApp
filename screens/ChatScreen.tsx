@@ -1,5 +1,5 @@
 import React, { FC, useState, useCallback, useEffect } from 'react'
-import { Text } from 'react-native'
+import { Text, Button } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { IChatScreen } from '../types/IChatScreen'
 import { IMessage } from '../types/IMessage'
@@ -14,38 +14,51 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
   const [sendMessage, { data }] = useMutation(SEND_MESSAGE, { variables: { RoomID } });
   const [messages, setMessages] = useState<IMessage>([]);
 
+  //zmapowac wsyzstkie wiadomosci
+  // i potem dopiero setMessages na wsyzstko
+
+  const RenderItems = ({RoomData}) => {
+    RoomData.room.messages.map(({body, id, insertedAt}) => {
+      {
+        message: body
+      }
+    });
+  }
+
+
+
       useEffect(() => {
         if (RoomData != undefined) {
           RoomData.room.messages.map(({body, id, insertedAt}) => {
-            setMessages([
-              {
-                _id: id,
-                text: body,
-                createdAt: insertedAt,
-                user: {
-                  _id: 2,
-                  name: 'React Native',
-                  avatar: 'https://placeimg.com/140/140/any',
-                },
-              },
-            ])
+            setMessages(messages => [...messages, {
+              _id: id,
+              text: body,
+              createdAt: insertedAt,
+              user: {
+                _id: RoomData.room.user.id,
+                name: RoomData.room.user.firstname,
+                avatar: 'https://placeimg.com/140/140/any',
+                }
+            }])
           })
         }
     }, [RoomData])
-
+    
+    useEffect(() => {
+      console.log("ROUTE CHANGED!")
+    }, [route])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
-    sendMessage({ variables: { RoomID: RoomID} });
+    //sendMessage({ variables: { RoomID: RoomID} });
     //TODO: catch body string from typed message ^
   }, [])
   
-
     if (loading) return <Text>Loading...</Text>;
     if (error) return <Text>Error :(</Text>;
 
     return (
-      <>
+    <>
         <GiftedChat
           messages={messages}
           onSend={messages => onSend(messages)}
@@ -53,7 +66,7 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
             _id: 1,
           }}
         />
-      </>
+    </>
     )
 }
 
