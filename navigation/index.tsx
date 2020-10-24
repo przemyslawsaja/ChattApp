@@ -3,14 +3,13 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import { ColorSchemeName } from 'react-native';
 import { TRootStack } from '../types/TRootStack';
-import LinkingConfiguration from './LinkingConfiguration';
-import MainTabNavigator from './MainTabNavigator';
+import RoomListScreen from '../screens/RoomListScreen'
+import ChatScreen from '../screens/ChatScreen'
 import Colors from '../constants/Colors';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
@@ -27,13 +26,22 @@ function RootNavigator() {
       headerStyle: {
         backgroundColor: Colors.light.tint
       },
+      headerTitleAlign: 'center',
       headerTintColor: Colors.light.background,
      }}>
       <Stack.Screen 
-        name="Root" 
-        component={MainTabNavigator} 
+        name="Rooms" 
+        component={RoomListScreen} 
         options={{
-          title: "ChatBee"
+          title: "Your Rooms"
+        }}
+        
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen} 
+        options={{
+          title: "Chat"
         }}
       />
      

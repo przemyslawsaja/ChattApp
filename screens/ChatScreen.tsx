@@ -1,71 +1,57 @@
 import React, { FC, useState, useCallback, useEffect } from 'react'
-import { Text, Button } from 'react-native'
+import { Text } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { IChatScreen } from '../types/IChatScreen'
 import { IMessage } from '../types/IMessage'
 import { IRoom } from '../types/IRoom'
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ROOM_MESSAGES, SEND_MESSAGE } from '../graphql/queries'
+import { GET_ROOM_MESSAGES, SEND_MESSAGE, GET_CURRENT_USER_ID } from '../graphql/queries'
 
 const ChatScreen:FC<IChatScreen> = ({route}) => {
 
   const { id:RoomID} = route.params
-  const { loading, error, data:RoomData,} = useQuery<IRoom>(GET_ROOM_MESSAGES, { variables: { RoomID } });
-  const [sendMessage, { data }] = useMutation(SEND_MESSAGE, { variables: { RoomID } });
+  const { loading, error, data:CurrentRoom,} = useQuery<IRoom>(GET_ROOM_MESSAGES, { variables: { RoomID } });
+  const [sendMessage, { data }] = useMutation(SEND_MESSAGE, { variables: { RoomID, Text} });
+  const { data:LoggedUser,} = useQuery(GET_CURRENT_USER_ID);
   const [messages, setMessages] = useState<IMessage>([]);
 
-  //zmapowac wsyzstkie wiadomosci
-  // i potem dopiero setMessages na wsyzstko
-
-  const RenderItems = ({RoomData}) => {
-    RoomData.room.messages.map(({body, id, insertedAt}) => {
-      {
-        message: body
-      }
-    });
-  }
-
-
-
       useEffect(() => {
-        if (RoomData != undefined) {
-          RoomData.room.messages.map(({body, id, insertedAt}) => {
+        if (CurrentRoom != undefined) {
+          CurrentRoom.room.messages.map(({body, id, insertedAt}) => {
             setMessages(messages => [...messages, {
               _id: id,
               text: body,
               createdAt: insertedAt,
               user: {
-                _id: RoomData.room.user.id,
-                name: RoomData.room.user.firstname,
+                _id: CurrentRoom.room.user.id,
+                name: CurrentRoom.room.user.firstname,
                 avatar: 'https://placeimg.com/140/140/any',
                 }
             }])
           })
         }
-    }, [RoomData])
+        
+    }, [CurrentRoom])
     
-    useEffect(() => {
-      console.log("ROUTE CHANGED!")
-    }, [route])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
-    //sendMessage({ variables: { RoomID: RoomID} });
-    //TODO: catch body string from typed message ^
+    sendMessage({ variables: { RoomID: RoomID, Text: messages[0].text}});
   }, [])
   
     if (loading) return <Text>Loading...</Text>;
     if (error) return <Text>Error :(</Text>;
 
     return (
-    <>
-        <GiftedChat
-          messages={messages}
-          onSend={messages => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-        />
+    <>  
+      {console.log(messages)}
+      {LoggedUser != undefined && <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: LoggedUser.user.id,
+        }}
+      />}    
     </>
     )
 }

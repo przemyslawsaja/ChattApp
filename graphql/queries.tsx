@@ -16,8 +16,8 @@ export const GET_ROOM_MESSAGES = gql`
   }
   `;
 export const SEND_MESSAGE = gql`
-  mutation ($RoomID: String!){
-  sendMessage(body:"exmaple message", roomId: $RoomID){
+  mutation ($RoomID: String, $Text:String){
+  sendMessage(roomId: $RoomID, body: $Text){
     body
     insertedAt
     id
@@ -37,3 +37,11 @@ export const LIST_USER_ROOMS = gql`
       }
     }
   `;
+
+export const GET_CURRENT_USER_ID = gql`
+{
+  user{
+    id
+  }
+}
+`
