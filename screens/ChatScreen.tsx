@@ -3,17 +3,20 @@ import { Text } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { IChatScreen } from '../types/IChatScreen'
 import { IMessage } from '../types/IMessage'
-import { IRoom } from '../types/IRoom'
+import { IRoomData, IRoomVars} from '../types/IRoom'
 import { useQuery, useMutation } from '@apollo/client';
+import { IQueryMessage } from '../types/IQueryMessage'
 import { GET_ROOM_MESSAGES, SEND_MESSAGE, GET_CURRENT_USER_ID } from '../graphql/queries'
 
 const ChatScreen:FC<IChatScreen> = ({route}) => {
 
   const { id:RoomID} = route.params
-  const { loading, error, data:CurrentRoom,} = useQuery<IRoom>(GET_ROOM_MESSAGES, { variables: { RoomID } });
-  const [sendMessage, { data }] = useMutation(SEND_MESSAGE, { variables: { RoomID, Text} });
-  const { data:LoggedUser,} = useQuery(GET_CURRENT_USER_ID);
-  const [messages, setMessages] = useState<IMessage>([]);
+  const [messages, setMessages] = useState<Array<IMessage>>([]);
+  
+  const { loading, error, data:CurrentRoom} = useQuery<IRoomData, IRoomVars>(GET_ROOM_MESSAGES, { variables: { RoomID } });
+  const [sendMessage] = useMutation<IQueryMessage>(SEND_MESSAGE, { variables: { RoomID, Text} });
+  const { data:LoggedUser} = useQuery(GET_CURRENT_USER_ID);
+  
 
       useEffect(() => {
         if (CurrentRoom != undefined) {
@@ -24,15 +27,14 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
               createdAt: insertedAt,
               user: {
                 _id: user.id,
-                name: user.firstname,
+                name: user.firstName,
                 avatar: 'https://placeimg.com/140/140/any',
                 }
             }])
           })
         }
-        
     }, [CurrentRoom])
-    
+   
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
@@ -44,10 +46,6 @@ const ChatScreen:FC<IChatScreen> = ({route}) => {
 
     return (
     <>
-      {console.log("state:")}  
-      {console.log(messages)}
-      {console.log("db:")}
-      {console.log(CurrentRoom)}
       {LoggedUser != undefined && <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}

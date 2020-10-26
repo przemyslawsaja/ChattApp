@@ -19,11 +19,6 @@ export const SEND_MESSAGE = gql`
   mutation ($RoomID: String, $Text:String){
   sendMessage(roomId: $RoomID, body: $Text){
     body
-    insertedAt
-    id
-    user {
-      id
-    }
   }
 }
 `

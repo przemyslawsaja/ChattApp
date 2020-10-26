@@ -1,8 +1,8 @@
 import React, { FC } from 'react'; 
 import { Text, View } from '../Themed';
 import { IChatRoom } from '../../types/IChatRoom'
-import styles from './style'
 import { Button } from 'react-native';
+import styles from './style'
 
 const RoomListItem:FC<IChatRoom> = ({id, name, navigation}) => {
   return (
@@ -13,7 +13,6 @@ const RoomListItem:FC<IChatRoom> = ({id, name, navigation}) => {
         onPress={() => navigation.navigate('Chat',{ id: id })}
       />
     </View>
-
   )
 }
 

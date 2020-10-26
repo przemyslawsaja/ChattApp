@@ -1,10 +1,10 @@
-export type IMessage =  Array<{
+export interface IMessage {
   _id: String,
   text: string,
-  createdAt: number,
+  createdAt: string,
   user: {
-    _id: number,
+    _id: string,
     name: string,
     avatar: string,
-  }
-}>
+    },
+}
