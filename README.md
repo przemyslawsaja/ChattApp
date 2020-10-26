@@ -9,7 +9,7 @@ ChatApp
 - Graphql </br>
 - Apollo </br>
 
-##Todo
+## Todo
 - Login user screen
 - register user screen
 - UI improvments
